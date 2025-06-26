@@ -3,8 +3,15 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const Subscriber = require('./models/subscriber');
 require('dotenv/config');
+const newsletterRoutes = require('./routes/newsletter');
 
+app.use('/api/newsletter/subscribe',cors({
+    origin: 'http://localhost:3008', // allow your frontend dev server
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 app.use(cors());
 app.options('*', cors())
 
@@ -31,6 +38,7 @@ const bannersSchema = require('./routes/banners.js');
 const homeSideBannerSchema = require('./routes/homeSideBanner.js');
 const homeBottomBannerSchema = require('./routes/homeBottomBanner.js');
 
+app.use('/api/newsletter', newsletterRoutes);
 app.use("/api/user",userRoutes);
 app.use("/uploads",express.static("uploads"));
 app.use(`/api/category`, categoryRoutes);

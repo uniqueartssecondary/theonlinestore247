@@ -50,7 +50,7 @@ router.post('/add', async (req, res) => {
     
         res.status(201).json(list);
     }else{
-        res.status(401).json({status:false,msg:"Product already added in the My List"})
+        res.status(401).json({status:false,msg:"Product already added in the Wishlist"})
     }
 
    
