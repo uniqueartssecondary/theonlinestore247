@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Subscriber = require('../models/subscriber.js');
 
+// ✅ POST - Subscribe a user
 router.post('/subscribe', async (req, res) => {
   const { email } = req.body;
 
@@ -23,6 +24,18 @@ router.post('/subscribe', async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+// ✅ GET - Fetch all subscribers
+router.get('/', async (req, res) => {
+  try {
+    const subscribers = await Subscriber.find().sort({ subscribedAt: -1 });
+    res.status(200).json(subscribers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch subscribers' });
   }
 });
 

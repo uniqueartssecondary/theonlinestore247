@@ -403,50 +403,51 @@ router.get(`/get/count`, async (req, res) => {
   });
 });
 
-// router.post(`/authWithGoogle`, async (req, res) => {
-//   const { name, phone, email, password, images, isAdmin } = req.body;
+router.post(`/authWithGoogleClient`, async (req, res) => {
+  const { name, phone, email, password, images, isAdmin } = req.body;
 
-//   try {
-//     const existingUser = await User.findOne({ email: email });
+  try {
+    
+    const existingUser = await User.findOne({ email: email });
 
-//     if (!existingUser) {
-//       const result = await User.create({
-//         name: name,
-//         phone: phone,
-//         email: email,
-//         password: password,
-//         images: images,
-//         isAdmin: isAdmin,
-//         isVerified: true,
-//       });
+    if (!existingUser) {
+      const result = await User.create({
+        name: name,
+        phone: phone,
+        email: email,
+        password: password,
+        images: images,
+        isAdmin: isAdmin,
+        isVerified: true,
+      });
 
-//       const token = jwt.sign(
-//         { email: result.email, id: result._id },
-//         process.env.JSON_WEB_TOKEN_SECRET_KEY
-//       );
+      const token = jwt.sign(
+        { email: result.email, id: result._id },
+        process.env.JSON_WEB_TOKEN_SECRET_KEY
+      );
 
-//       return res.status(200).send({
-//         user: result,
-//         token: token,
-//         msg: "User Login Successfully!",
-//       });
-//     } else {
-//       const existingUser = await User.findOne({ email: email });
-//       const token = jwt.sign(
-//         { email: existingUser.email, id: existingUser._id },
-//         process.env.JSON_WEB_TOKEN_SECRET_KEY
-//       );
+      return res.status(200).send({
+        user: result,
+        token: token,
+        msg: "Login Successfully!",
+      });
+    } else {
+      const existingUser = await User.findOne({ email: email });
+      const token = jwt.sign(
+        { email: existingUser.email, id: existingUser._id },
+        process.env.JSON_WEB_TOKEN_SECRET_KEY
+      );
 
-//       return res.status(200).send({
-//         user: existingUser,
-//         token: token,
-//         msg: "User Login Successfully!",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+      return res.status(200).send({
+        user: existingUser,
+        token: token,
+        msg: "Login Successfully!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 
@@ -456,7 +457,8 @@ router.post(`/authWithGoogle`, async (req, res) => {
   // ✅ Define allowed admin emails here or load them from env/database
   const allowedAdminEmails = [
     "alireza160605@gmail.com",
-    "uniqueartssecondary@gmail.com"
+    "uniqueartssecondary@gmail.com",
+    "uniquearts12@gmail.com"
     // Add your trusted admin emails
   ];
 
@@ -500,7 +502,7 @@ router.post(`/authWithGoogle`, async (req, res) => {
     return res.status(200).send({
       user,
       token,
-      msg: "Admin Login Successfully!",
+      msg: "Login Successfully!",
     });
   } catch (error) {
     console.error(error);

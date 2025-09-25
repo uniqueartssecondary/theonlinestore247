@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const Subscriber = require('./models/subscriber');
 require('dotenv/config');
-const newsletterRoutes = require('./routes/newsletter');
 
 app.use('/api/newsletter/subscribe',cors({
     origin: 'http://localhost:3008', // allow your frontend dev server
@@ -32,6 +31,7 @@ const productReviews = require('./routes/productReviews.js');
 const cartSchema = require('./routes/cart.js');
 const myListSchema = require('./routes/myList.js');
 const ordersSchema = require('./routes/orders.js');
+const newsletterRoutes = require('./routes/newsletter.js');
 const homeBannerSchema = require('./routes/homeBanner.js');
 const searchRoutes = require('./routes/search.js');
 const bannersSchema = require('./routes/banners.js');
@@ -60,10 +60,7 @@ app.use(`/api/homeBottomBanners`, homeBottomBannerSchema);
 
 
 //Database
-mongoose.connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(process.env.CONNECTION_STRING)
     .then(() => {
         console.log('Database Connection is ready...');
         //Server
